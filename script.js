@@ -1,14 +1,5 @@
 async function loadProducts() {
-  const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/68ab9fc7ae596e708fd41b27';
-  try {
-    const res = await fetch(JSONBIN_URL, {
-      headers: {
-        "X-Master-Key": "$2a$10$xUeBM8cH3xsSekZmD0vrt.lyMGueumhQwvl04H3PuFAeLDB4BRFpC"
-      }
-    });
-
-    if (!res.ok) throw new Error(`فشل التحميل: ${res.status}`);
-
+    const res = await fetch('data.json')
     const data = await res.json();
     const products = data.record; // استخدام المفتاح record
 
@@ -80,3 +71,4 @@ if (window.location.pathname.includes('product.html')) {
     }
   })();
 }
+
