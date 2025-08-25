@@ -21,7 +21,7 @@ async function loadProducts() {
         card.innerHTML = `
           <img src="${product.image}" width="50%" height="50%" loading="lazy" alt="${product.name}">
           <h3>${product.name}</h3>
-          <p>${product.description}</p>
+          <p style="margin:20px;direction:rtl;">${product.description}</p>
         `;
         card.onclick = () => {
           window.location.href = `${product.link}`;
@@ -84,3 +84,4 @@ async function loadProductDetail() {
 // استدعاء الدوال
 loadProducts();
 loadProductDetail();
+
