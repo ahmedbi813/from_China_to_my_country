@@ -10,34 +10,37 @@ async function loadProducts() {
 
     const products = await res.json();
 
+    // عرض آخر 12 منتج فقط (الأحدث أولاً)
+    const latestProducts = products.slice(-12).reverse();
+
     function displayProducts(filtered) {
       list.innerHTML = '';
       filtered.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card fade-in';
         card.innerHTML = `
-          <img src="${product.image}" width="50%" height="50%"  loading="lazy" alt="${product.name}">
+          <img src="${product.image}" width="50%" height="50%" loading="lazy" alt="${product.name}">
           <h3>${product.name}</h3>
           <p>${product.description}</p>
         `;
         card.onclick = () => {
-          // window.location.href = `product.html?id=${product.id}`;
-          window.location.href = `${product.link}`
-          
+          window.location.href = `${product.link}`;
         };
         list.appendChild(card);
       });
     }
 
-    displayProducts(products);
+    displayProducts(latestProducts);
 
     if (searchInput) {
       searchInput.addEventListener('input', e => {
         const term = e.target.value.toLowerCase();
-        displayProducts(products.filter(p =>
+        // البحث يشمل كل المنتجات وليس مقتصرًا على آخر 12
+        const filteredProducts = products.filter(p =>
           (p.name && p.name.toLowerCase().includes(term)) ||
           (p.keyword && p.keyword.toLowerCase().includes(term))
-        ));
+        );
+        displayProducts(filteredProducts);
       });
     }
   } catch (err) {
@@ -64,7 +67,7 @@ async function loadProductDetail() {
     if (product) {
       container.innerHTML = `
         <h2>${product.name}</h2>
-        <img src="${product.image}" alt="${product.name}"  class="Image_Size">
+        <img src="${product.image}" alt="${product.name}" class="Image_Size">
         <p id="Description">${product.description || "لا يوجد وصف"}</p>
         ${product.link ? `<a href="${product.link}" target="_blank" class="btn">تفاصيل المنتج</a>` : ""}
         <a href="index.html" class="btn">🔙 رجوع</a>
@@ -81,5 +84,3 @@ async function loadProductDetail() {
 // استدعاء الدوال
 loadProducts();
 loadProductDetail();
-
-
