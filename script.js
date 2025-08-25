@@ -16,7 +16,7 @@ async function loadProducts() {
         const card = document.createElement('div');
         card.className = 'product-card fade-in';
         card.innerHTML = `
-          <img src="${product.image}" alt="${product.name}">
+          <img src="${product.image}" width="50%" height="50%" alt="${product.name}">
           <h3>${product.name}</h3>
           <p>${product.price ? product.price + " USDT" : ""}</p>
         `;
